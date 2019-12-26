@@ -49,7 +49,7 @@ exports.logTimeFiltersFrom = function(options){
     // 'tracker_id': options.tracker || null
   };
 
-  if(options.me) filters.assigned_to_id = 'me';
+  if(options.me) filters.user_id = 'me';
 
   removeNullValues(filters);
 
