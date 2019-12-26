@@ -42,6 +42,7 @@ exports.logTimeFiltersFrom = function(options){
     'project_id': options.project || null,
     'from': options.from || null,
     'to': options.to || null,
+    'limit': options.limit || null,
     // 'priority_id': options.priority || null,
     // 'assigned_to_id': options.assignee || null,
     // 'status_id': options.status || null,

@@ -151,16 +151,35 @@ exports.handleTime = function (id, hours, comments, options) {
 }
 
 
-exports.handleLogTime = function (project, options) {
+exports.handleLogTime = function (options) {
     try {
         var filters = filter.logTimeFiltersFrom(options);
         var loggedTime = redmine.getLoggedTime(filters);
-        var resume = (loggedTime.time_entries.reduce((a, c) => {
-            a = (a || []);
-            a[c.spend_on] += c.hours;
-            return a;
-        })).reduce((a, c, i) => a.push({day:i, hours:c}));
-        printer.printLoggedtime(resume);
+        filters.offset = loggedTime.offset;
+        var resume = {};
+        while (filters.offset < loggedTime.total_count) {
+            for (let entry of loggedTime.time_entries) {
+                resume[entry.spent_on] = (resume[entry.spent_on] || 0) + parseFloat(entry.hours);
+            }
+            var days = [];
+            for (let day in resume) {
+                days.push({day: day, hours: resume[day]});
+            }
+            filters.offset += loggedTime.limit;
+            loggedTime = redmine.getLoggedTime(filters);
+        }
+
+        days.sort(((a, b) => {
+            if (a.day < b.day) {
+                return -1;
+            }
+            if (a.day > b.day) {
+                return 1;
+            }
+            return 0;
+        }));
+
+        printer.printLoggedtime(days);
     } catch (err) {
         console.error(err)
     }

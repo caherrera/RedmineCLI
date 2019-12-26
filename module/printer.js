@@ -49,7 +49,7 @@ exports.printUser = function(user){
   console.log(out);
 }
 
-exports.printLoggedtime = function(resume){
-  var out = tmpl.renderFile('template/logged_time.tmpl', resume);
+exports.printLoggedtime = function(days){
+  var out = tmpl.renderFile('template/logged_time.tmpl', {days:days});
   console.log(out);
 }

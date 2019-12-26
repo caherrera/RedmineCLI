@@ -52,6 +52,7 @@ program
     .option('-m, --me', 'Only display issues assigned to me.')
     .option('-f, --from', 'filtering by date, you can require a min / max date')
     .option('-t, --to', 'filtering by date, you can require a min / max date')
+    .option('-l, --limit <limit>', 'limit',1000)
     .action(actions.handleLogTime);
   ;
 
