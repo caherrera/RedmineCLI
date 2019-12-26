@@ -141,10 +141,16 @@ exports.handleOpen = function (id) {
     }
 }
 
-exports.handleTime = function (id, hours, comments, options) {
+exports.handleLogTime = function (project, options) {
     try {
-        var logTime = redmine.logTime(id, hours, comments, options);
-        console.log('Successfully created #' + logTime.time_entry.id);
+        var filters = filter.logTimeFiltersFrom(options);
+        var loggedTime = redmine.getLoggedTime(filters);
+        var resume = (loggedTime.time_entries.reduce((a, c) => {
+            a = (a || []);
+            a[c.spend_on] += c.hours;
+            return a;
+        })).reduce((a, c, i) => a.push({day:i, hours:c}));
+        printer.printLoggedtime(resume);
     } catch (err) {
         console.error(err)
     }

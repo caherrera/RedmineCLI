@@ -32,4 +32,25 @@ exports.issuesFiltersFrom = function(options){
   removeNullValues(filters);
 
   return filters;
+};
+
+
+exports.logTimeFiltersFrom = function(options){
+  resolveIdsForNames(options);
+
+  var filters = {
+    'project_id': options.project || null,
+    'from': options.from || null,
+    'to': options.to || null,
+    // 'priority_id': options.priority || null,
+    // 'assigned_to_id': options.assignee || null,
+    // 'status_id': options.status || null,
+    // 'tracker_id': options.tracker || null
+  };
+
+  if(options.me) filters.assigned_to_id = 'me';
+
+  removeNullValues(filters);
+
+  return filters;
 }

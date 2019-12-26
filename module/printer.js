@@ -48,3 +48,8 @@ exports.printUser = function(user){
   var out = tmpl.renderFile('template/user.tmpl', user);
   console.log(out);
 }
+
+exports.printLoggedtime = function(resume){
+  var out = tmpl.renderFile('template/logged_time.tmpl', resume);
+  console.log(out);
+}

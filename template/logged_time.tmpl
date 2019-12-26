@@ -1,0 +1,5 @@
+{% filter table(['DAY', 'HOURS']) -%}
+{% for day in resume -%}
+{{day.day}}|{{day.hours}}
+{% endfor -%}
+{% endfilter -%}

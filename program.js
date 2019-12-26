@@ -46,6 +46,16 @@ program
     .action(actions.handleTime);
 
 program
+    .command('log-time')
+    .description('Display consumed time')
+    .option('-p, --project <project>', 'Only display issues for the specified project.')
+    .option('-m, --me', 'Only display issues assigned to me.')
+    .option('-f, --from', 'filtering by date, you can require a min / max date')
+    .option('-t, --to', 'filtering by date, you can require a min / max date')
+    .action(actions.handleTime);
+  ;
+
+program
   .command('issues')
   .description('Display issues.')
   .option('-p, --project <project>', 'Only display issues for the specified project.')

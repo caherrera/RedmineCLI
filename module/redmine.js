@@ -166,6 +166,18 @@ exports.getIssues = function (filters) {
     }
 }
 
+exports.getLoggedTime = function (filters) {
+    throwWhenNotConnected();
+
+    var query = querystring.stringify(filters);
+    var response = get('/time_entries.json' + (query ? '?' + query : query));
+    try {
+        return JSON.parse(response.getBody('utf8'));
+    } catch (err) {
+        throw 'Could not load issues.'
+    }
+}
+
 exports.getIssue = function (id, options) {
     throwWhenNotConnected();
 
