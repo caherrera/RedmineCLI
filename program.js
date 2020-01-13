@@ -53,7 +53,7 @@ program
     .option('-f, --from <from>', 'filtering by date, you can require a min / max date')
     .option('-t, --to <to>', 'filtering by date, you can require a min / max date')
     .option('-l, --limit <limit>', 'limit',1000)
-    .option('-G, --group-by <group>', 'Group by')
+    .option('-g, --group-by <group>', 'Group by')
     .action(actions.handleLogTime);
   ;
 

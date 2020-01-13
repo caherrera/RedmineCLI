@@ -160,7 +160,7 @@ exports.handleLogTime = function (options) {
         var days = [];
         var issues = [];
         while (filters.offset < loggedTime.total_count) {
-            if (options.group) {
+            if (options.groupBy) {
                 for (let entry of loggedTime.time_entries) {
                     resume[entry.spent_on] = (resume[entry.spent_on] || 0) + parseFloat(entry.hours);
                 }
@@ -192,7 +192,7 @@ exports.handleLogTime = function (options) {
             }
             return 0;
         }));
-        if (options.group) {
+        if (options.groupBy) {
             printer.printLoggedtimeResume(days);
         } else {
             printer.printLoggedtime(days);
