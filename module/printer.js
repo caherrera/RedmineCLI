@@ -49,7 +49,12 @@ exports.printUser = function(user){
   console.log(out);
 }
 
-exports.printLoggedtime = function(days){
-  var out = tmpl.renderFile('template/logged_time.tmpl', {days:days});
+exports.printLoggedtime = function(issues){
+  var out = tmpl.renderFile('template/logged_time.tmpl', {issues:issues});
+  console.log(out);
+}
+
+exports.printLoggedtimeResume = function(days){
+  var out = tmpl.renderFile('template/logged_time_short.tmpl', {days:days});
   console.log(out);
 }

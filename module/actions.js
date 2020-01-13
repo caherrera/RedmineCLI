@@ -157,13 +157,27 @@ exports.handleLogTime = function (options) {
         var loggedTime = redmine.getLoggedTime(filters);
         filters.offset = loggedTime.offset;
         var resume = {};
+        var days = [];
+        var issues = [];
         while (filters.offset < loggedTime.total_count) {
-            for (let entry of loggedTime.time_entries) {
-                resume[entry.spent_on] = (resume[entry.spent_on] || 0) + parseFloat(entry.hours);
-            }
-            var days = [];
-            for (let day in resume) {
-                days.push({day: day, hours: resume[day]});
+            if (options.group) {
+                for (let entry of loggedTime.time_entries) {
+                    resume[entry.spent_on] = (resume[entry.spent_on] || 0) + parseFloat(entry.hours);
+                }
+
+                for (let day in resume) {
+                    days.push({day: day, hours: resume[day]});
+                }
+
+            } else {
+                for (let entry of loggedTime.time_entries) {
+                    let issue;
+                    if (!issues[entry.issue.id]) {
+                        issues[entry.issue.id] = redmine.getIssue(entry.issue.id, {});
+                    }
+                    issue = issues[entry.issue.id];
+                    days.push({day: entry.spent_on, issue: issue.issue, hours: entry.hours});
+                }
             }
             filters.offset += loggedTime.limit;
             loggedTime = redmine.getLoggedTime(filters);
@@ -178,8 +192,11 @@ exports.handleLogTime = function (options) {
             }
             return 0;
         }));
-
-        printer.printLoggedtime(days);
+        if (options.group) {
+            printer.printLoggedtimeResume(days);
+        } else {
+            printer.printLoggedtime(days);
+        }
     } catch (err) {
         console.error(err)
     }

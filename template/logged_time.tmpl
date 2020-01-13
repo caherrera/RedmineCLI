@@ -1,5 +1,5 @@
-{% filter table(['DAY', 'HOURS']) -%}
-{% for day in days -%}
-{{day.day}}|{{day.hours}}
+{% filter table(['issue', 'HOURS','ISSUE','SUBJECT']) -%}
+{% for issue in issues -%}
+{{issue.day}}|{{issue.hours}}|{{issue.issue.id}}|{{issue.issue.subject}}
 {% endfor -%}
 {% endfilter -%}
